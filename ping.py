@@ -3,8 +3,8 @@ import time
 import random
 from configparser import ConfigParser
 
+# Configs
 config = ConfigParser()
-
 config.read('config.ini')
 supabase_apikey = config.get('supabase', 'api_key')
 supabase_url = config.get('supabase', 'url')
