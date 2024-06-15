@@ -251,4 +251,4 @@ __pycache__/
 *.tar.gz
 *.whl
 
-conf.json
+config.ini
