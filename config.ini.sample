@@ -1,0 +1,6 @@
+[supabase]
+api_key = ""
+url = ""
+
+[ntfy]
+url =  ""

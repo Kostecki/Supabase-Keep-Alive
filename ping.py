@@ -1,19 +1,19 @@
 import requests
 import time
 import random
-import json
+from configparser import ConfigParser
 
-with open('config.json', 'r') as config_file:
-    config = json.load(config_file)
+config = ConfigParser()
 
-# Configuration
-api_key = config_file['api_key']
-url = config_file['url']
+config.read('config.ini')
+supabase_apikey = config.get('supabase', 'api_key')
+supabase_url = config.get('supabase', 'url')
+ntfy_url = config.get('ntfy', 'url')
  
 # Define the headers for the GET request
 headers = {
-    'apikey': api_key,
-    'Authorization': api_key
+    'apikey': supabase_apikey,
+    'Authorization': supabase_apikey,
 }
 
 # Delay range in seconds (1 second to 23 hours)
@@ -42,7 +42,7 @@ def format_delay(seconds: int) -> str:
         return parts[0]
 
 def notify_failure(message: str):
-    requests.post("https://ntfy.israndom.win/mil-pos", data=message, headers={
+    requests.post(ntfy_url, data=message, headers={
         "Title": "Supabase keep-alive failed",
         "Tags": "rotating_light"
     })
@@ -63,7 +63,7 @@ def main():
     time.sleep(delay)
 
     # Make the GET request
-    make_get_request(url, headers)
+    make_get_request(supabase_url, headers)
 
 if __name__ == '__main__':
     main()
